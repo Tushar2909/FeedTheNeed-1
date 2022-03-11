@@ -11,7 +11,10 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   String name = "";
   bool changeButton = false;
-
+  late String email;
+  //TextController to read text entered in text field
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmpassword = TextEditingController();
   moveToHome(BuildContext context) async {
     if (_formkey.currentState!.validate()) {
       setState(() {
@@ -88,17 +91,42 @@ class _RegisterPageState extends State<RegisterPage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
                       child: TextFormField(
-                        obscureText: true,
+                        controller: password,
+                         obscureText: true,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           icon: Icon(Icons.lock),
                           hintText: "Enter Password",
                           labelText: "Password",
+                          
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return ("Password cannot be empty!");
-                          } else if (value.length < 6) {
-                            return ("Password length should be at east 6!");
+                            return 'Please a Enter Password';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
+                      child: TextFormField(
+                        controller: confirmpassword,
+                        obscureText: true,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.lock),
+                          hintText: "Enter Confirmed Password",
+                          labelText: "Confirmed Password",
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please re-enter password';
+                          }
+                          print(password.text);
+                          print(confirmpassword.text);
+                          if (password.text != confirmpassword.text) {
+                            return " Password and confirm password  doesn't match";
                           }
                           return null;
                         },
@@ -112,10 +140,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: "Enter Phone Number",
                           labelText: "Phone Number",
                         ),
-                        validator: (finalvalue) {
-                          if (finalvalue!.isEmpty) {
+                        validator: (value) {
+                          if (value!.isEmpty) {
                             return ("Phone number cannot be empty!");
-                          } else if (finalvalue.length < 10) {
+                          } else if (value.length < 10) {
                             return ("Number length should be at east 10!");
                           }
                           return null;
@@ -125,16 +153,24 @@ class _RegisterPageState extends State<RegisterPage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
                       child: TextFormField(
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           icon: Icon(Icons.email_sharp),
                           hintText: "Enter Email",
                           labelText: "Email",
                         ),
-                        validator: (finalvalue) {
-                          if (finalvalue!.isEmpty) {
-                            return ("Email cannot be empty!");
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please a Enter';
+                          }
+                          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                              .hasMatch(value)) {
+                            return 'Please Enter a valid Email';
                           }
                           return null;
+                        },
+                        onSaved: (value) {
+                          email = value!;
                         },
                       ),
                     ),
@@ -204,39 +240,10 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+
+  buildInputDecoration(IconData email, String s) {}
 }
 
-// leading: IconButton(
-//   onPressed: () {
-//     Navigator.pop(context);
-//   },
-//   icon: Icon(
-//     Icons.arrow_back_ios,
-//     size: 20,
-//     color: Colors.blue,
-//   ),
-// ),
-
-// SizedBox(
-//   height: 3,
-// ),
-// TextFormField(
-//   obscureText: true,
-//   decoration: InputDecoration(
-//     hintText: "Enter Confirm Password",
-//     labelText: "Confirm Password",
-//   ),
-//   validator: (value) {
-//     if (value!.isEmpty) {
-//       return ("Password cannot be empty!");
-//     }
-//     return null;
-//   },
-// ),
-
-// SizedBox(
-//   height: 3,
-// ),
 
 // Column(
 //   children: <Widget>[
@@ -309,3 +316,314 @@ Widget inputFile({label, obscureText = false}) {
     ],
   );
 }
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+// import 'package:myapp/pages/login_page.dart';
+// import '../utils/routes.dart';
+
+// class RegisterPage extends StatefulWidget {
+//   @override
+//   State<RegisterPage> createState() => _RegisterPageState();
+// }
+
+// class _RegisterPageState extends State<RegisterPage> {
+//   String name = "";
+//   bool changeButton = false;
+
+//   moveToHome(BuildContext context) async {
+//     if (_formkey.currentState!.validate()) {
+//       setState(() {
+//         changeButton = true;
+//       });
+//       await Future.delayed(Duration(seconds: 1));
+//       await Navigator.pushNamed(context, MyRoutes.ButtomBarRoute);
+//       setState(() {
+//         changeButton = false;
+//       });
+//     }
+//   }
+
+//   final _formkey = GlobalKey<FormState>();
+//   @override
+//   Widget build(BuildContext context) {
+//     return Material(
+//       color: Colors.white,
+//       child: SingleChildScrollView(
+//         child: Form(
+//           key: _formkey,
+//           child: Column(
+//             children: [
+//               Padding(
+//                 padding:
+//                     const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+//                 child: Text(
+//                   "Sign Up",
+//                   style: TextStyle(
+//                     fontSize: 35,
+//                     color: Colors.blue,
+//                     fontStyle: FontStyle.normal,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//               Padding(
+//                 padding:
+//                     const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+//                 child: Text(
+//                   "Feed The Need Welcomes You",
+//                   style: TextStyle(
+//                     fontSize: 20,
+//                     color: Colors.blue,
+//                     fontStyle: FontStyle.normal,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//               Padding(
+//                 padding:
+//                     const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+//                 child: Column(
+//                   children: [
+//                     Padding(
+//                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
+//                       child: TextFormField(
+//                           decoration: InputDecoration(
+//                             icon: Icon(Icons.person),
+//                             hintText: "Enter Username",
+//                             labelText: "Username",
+//                           ),
+//                           validator: (value) {
+//                             if (value!.isEmpty) {
+//                               return ("Username cannot be empty!");
+//                             }
+//                             return null;
+//                           },
+//                           onChanged: (value) {
+//                             name = value;
+//                             setState(() {});
+//                           }),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
+//                       child: TextFormField(
+//                         obscureText: true,
+//                         decoration: InputDecoration(
+//                           icon: Icon(Icons.lock),
+//                           hintText: "Enter Password",
+//                           labelText: "Password",
+//                         ),
+//                         validator: (value) {
+//                           if (value!.isEmpty) {
+//                             return ("Password cannot be empty!");
+//                           } else if (value.length < 6) {
+//                             return ("Password length should be at east 6!");
+//                           }
+//                           return null;
+//                         },
+//                       ),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
+//                       child: TextFormField(
+//                         decoration: InputDecoration(
+//                           icon: Icon(Icons.local_phone),
+//                           hintText: "Enter Phone Number",
+//                           labelText: "Phone Number",
+//                         ),
+//                         validator: (finalvalue) {
+//                           if (finalvalue!.isEmpty) {
+//                             return ("Phone number cannot be empty!");
+//                           } else if (finalvalue.length < 10) {
+//                             return ("Number length should be at east 10!");
+//                           }
+//                           return null;
+//                         },
+//                       ),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
+//                       child: TextFormField(
+//                         decoration: InputDecoration(
+//                           icon: Icon(Icons.email_sharp),
+//                           hintText: "Enter Email",
+//                           labelText: "Email",
+//                         ),
+//                         validator: (finalvalue) {
+//                           if (finalvalue!.isEmpty) {
+//                             return ("Email cannot be empty!");
+//                           }
+//                           return null;
+//                         },
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: 30,
+//                     ),
+//                     Material(
+//                       color: Colors.blue,
+//                       borderRadius:
+//                           BorderRadius.circular(changeButton ? 50 : 8),
+//                       child: InkWell(
+//                         onTap: () => moveToHome(context),
+//                         child: AnimatedContainer(
+//                           duration: Duration(milliseconds: 180),
+//                           width: changeButton ? 50 : 150,
+//                           height: 45,
+//                           alignment: Alignment.center,
+//                           child: changeButton
+//                               ? Icon(
+//                                   Icons.done,
+//                                   color: Colors.white,
+//                                 )
+//                               : Text(
+//                                   "Sign Up",
+//                                   style: TextStyle(
+//                                     color: Colors.white,
+//                                     fontWeight: FontWeight.bold,
+//                                     fontSize: 22,
+//                                   ),
+//                                 ),
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: 5,
+//                     ),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: <Widget>[
+//                         Text(
+//                           "Already have an account ?",
+//                           style: TextStyle(
+//                             fontStyle: FontStyle.normal,
+//                             fontSize: 19,
+//                           ),
+//                         ),
+//                         InkWell(
+//                           onTap: () {
+//                             Navigator.pushNamed(context, MyRoutes.loginRoute);
+//                           },
+//                           child: Text(
+//                             " Login",
+//                             style: TextStyle(
+//                                 fontWeight: FontWeight.w600,
+//                                 fontSize: 22,
+//                                 color: Colors.blue),
+//                           ),
+//                         )
+//                       ],
+//                     )
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// // leading: IconButton(
+// //   onPressed: () {
+// //     Navigator.pop(context);
+// //   },
+// //   icon: Icon(
+// //     Icons.arrow_back_ios,
+// //     size: 20,
+// //     color: Colors.blue,
+// //   ),
+// // ),
+
+// // SizedBox(
+// //   height: 3,
+// // ),
+// // TextFormField(
+// //   obscureText: true,
+// //   decoration: InputDecoration(
+// //     hintText: "Enter Confirm Password",
+// //     labelText: "Confirm Password",
+// //   ),
+// //   validator: (value) {
+// //     if (value!.isEmpty) {
+// //       return ("Password cannot be empty!");
+// //     }
+// //     return null;
+// //   },
+// // ),
+
+// // SizedBox(
+// //   height: 3,
+// // ),
+
+// // Column(
+// //   children: <Widget>[
+// //     inputFile(label: "Username"),
+// //     inputFile(label: "Email"),
+// //     inputFile(label: "Password", obscureText: true),
+// //     inputFile(label: "Confirm Password ", obscureText: true),
+// //     inputFile(label: "Phone Number "),
+// //   ],
+// // ),
+// // Container(
+// //   padding: EdgeInsets.only(top: 3, left: 3),
+// //   decoration: BoxDecoration(
+// //       borderRadius: BorderRadius.circular(50),
+// //       border: Border(
+// //         bottom: BorderSide(color: Colors.black),
+// //         top: BorderSide(color: Colors.black),
+// //         left: BorderSide(color: Colors.black),
+// //         right: BorderSide(color: Colors.black),
+// //       )),
+// //   child: MaterialButton(
+// //     minWidth: double.infinity,
+// //     height: 60,
+// //     onPressed: () {},
+// //     color: Color(0xff0095FF),
+// //     elevation: 0,
+// //     shape: RoundedRectangleBorder(
+// //         borderRadius: BorderRadius.circular(35)),
+// //     child: Text(
+// //       "Sign up",
+// //       style: TextStyle(
+// //         fontStyle: FontStyle.normal,
+// //         fontWeight: FontWeight.w800,
+// //         fontSize: 20,
+// //         color: Colors.white,
+// //       ),
+// //     ),
+// //   ),
+// // ),
+
+// // SizedBox(
+// //   height: 5,
+// // ),
+
+// Widget inputFile({label, obscureText = false}) {
+//   return Column(
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     children: <Widget>[
+//       Text(
+//         label,
+//         style: TextStyle(
+//             fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+//       ),
+//       SizedBox(
+//         height: 5,
+//       ),
+//       TextField(
+//         obscureText: obscureText,
+//         decoration: InputDecoration(
+//             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+//             enabledBorder: OutlineInputBorder(
+//               borderSide: BorderSide(color: Colors.grey),
+//             ),
+//             border:
+//                 OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+//       ),
+//       SizedBox(
+//         height: 10,
+//       )
+//     ],
+//   );
+// }
