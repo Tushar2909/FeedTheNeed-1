@@ -92,13 +92,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
                       child: TextFormField(
                         controller: password,
-                         obscureText: true,
+                        obscureText: true,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           icon: Icon(Icons.lock),
                           hintText: "Enter Password",
                           labelText: "Password",
-                          
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -139,13 +138,17 @@ class _RegisterPageState extends State<RegisterPage> {
                           icon: Icon(Icons.local_phone),
                           hintText: "Enter Phone Number",
                           labelText: "Phone Number",
+                          
+
                         ),
+                        keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return ("Phone number cannot be empty!");
                           } else if (value.length < 10) {
                             return ("Number length should be at east 10!");
-                          }
+                          } 
+                          
                           return null;
                         },
                       ),
@@ -153,6 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
                       child: TextFormField(
+                        
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           icon: Icon(Icons.email_sharp),
@@ -243,7 +247,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   buildInputDecoration(IconData email, String s) {}
 }
-
 
 // Column(
 //   children: <Widget>[
