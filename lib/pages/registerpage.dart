@@ -188,7 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: InkWell(
                         onTap: () => moveToHome(context),
                         child: AnimatedContainer(
-                          duration: Duration(milliseconds: 180),
+                          duration: Duration(milliseconds: 200),
                           width: changeButton ? 50 : 150,
                           height: 45,
                           alignment: Alignment.center,
