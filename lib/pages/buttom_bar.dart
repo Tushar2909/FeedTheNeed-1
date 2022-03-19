@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/pages/collection_page.dart';
+
 
 import 'package:myapp/pages/home_page.dart';
 import 'package:myapp/pages/logout_page.dart';
@@ -15,7 +15,7 @@ class _ButtomBarState extends State<ButtomBar> {
   int currentIndex = 0;
   final Screens = [
     HomePage(),
-    CollectionPage(),
+    
     ProfilePage(),
     NotificationPage(),
     LogOutPage(),

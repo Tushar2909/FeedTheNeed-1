@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String name = "";
   bool changeButton = false;
+  bool _isObscure = true;
 
   moveToHome(BuildContext context) async {
     if (_formkey.currentState!.validate()) {
@@ -77,23 +78,57 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
-                      child: TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          icon: Icon(Icons.lock),
-                          hintText: "Enter Password",
-                          labelText: "Password",
+                      child: Center(
+                        child: TextFormField(
+                          obscureText: _isObscure,
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.lock),
+                            hintText: "Enter Password",
+                            labelText: "Password",
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isObscure
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure;
+                                });
+                              },
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return ("Please Enter Password");
+                            } else if (value.length < 8) {
+                              return ("Number length should be at east 10!");
+                            }
+                            return null;
+                          },
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return ("Password cannot be empty!");
-                          } else if (value.length < 6) {
-                            return ("Password length should be at east 6!");
-                          }
-                          return null;
-                        },
                       ),
                     ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(15, 5, 10, 15),
+                    //   child: TextFormField(
+                    //     obscureText: true,
+                    //     decoration: InputDecoration(
+                    //       icon: Icon(Icons.lock),
+                    //       hintText: "Enter Password",
+                    //       labelText: "Password",
+                    //     ),
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) {
+                    //         return ("Password cannot be empty!");
+                    //       } else if (value.length < 6) {
+                    //         return ("Password length should be at east 6!");
+                    //       }
+                    //       return null;
+                    //     },
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 60,
                     ),
@@ -126,26 +161,26 @@ class _LoginPageState extends State<LoginPage> {
                           //  color: Colors.deepPurpleAccent,
                           // shape: changeButton?BoxShape.circle:BoxShape.rectangle,
 
-                         // ),
+                          // ),
                         ),
                       ),
                     ),
-                     SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
-                     ElevatedButton(
-                      
-                    child: Text("Forget Password?",
+                    ElevatedButton(
+                        child: Text(
+                          "Forget Password?",
                         ),
-                        style: TextButton.styleFrom(minimumSize: Size(150, 50,
-                        ),
-                        
-                        
+                        style: TextButton.styleFrom(
+                          minimumSize: Size(
+                            150,
+                            50,
+                          ),
                         ),
                         onPressed: () {
                           Navigator.pushNamed(context, MyRoutes.ForgotRoute);
                         }),
-                    
                     SizedBox(
                       height: 5,
                     ),
@@ -155,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                        "New Here? ",
+                            "New Here? ",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontStyle: FontStyle.normal,
@@ -165,23 +200,21 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.pushNamed(context, MyRoutes.RegisterRoute);
+                              Navigator.pushNamed(
+                                  context, MyRoutes.RegisterRoute);
                             },
                             child: Text(
                               " Register Now",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 20,
-                                 color: Colors.blue),
-                                //  textAlign: TextAlign.left,
-                                
-                                 
+                                  color: Colors.blue),
+                              //  textAlign: TextAlign.left,
                             ),
                           )
                         ],
                       ),
                     ),
-                   
                   ],
                 ),
               ),
