@@ -7,6 +7,7 @@ import 'package:myapp/pages/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/pages/registerpage.dart';
 import 'package:myapp/pages/FogotPass.dart';
+import 'package:magic_sdk/magic_sdk.dart';
 
 import 'package:myapp/utils/routes.dart';
 

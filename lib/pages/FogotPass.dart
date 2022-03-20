@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 
 import '../utils/routes.dart';
+import 'package:magic_sdk/magic_sdk.dart';
 
 class FogotPass extends StatelessWidget {
   const FogotPass({Key? key}) : super(key: key);
